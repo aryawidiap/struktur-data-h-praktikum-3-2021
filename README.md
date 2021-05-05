@@ -1,96 +1,119 @@
 # struktur-data-h-praktikum-2-2021
-## Penomoran Garasi Saha
+## Nadut Belajar
 ### Verdict
 AC saat praktikum
 #### Bukti
-![verdict_pgs](/img/verdict_pgs.jpg)
+![verdict_nb](/img/verdict_nb.jpg)
 ### Penjelasan Soal
-Diberikan beberapa bilangan yang merupakan nomor ruangan dari garasi saha. Bilangan-bilangan tersebut disusun menjadi `Binary Search Tree`. Kemudian, diminta untuk mengeluarkan bilangan dari level terbawah sampai teratas, dengan ketentuan: level paling bawah dikeluarkan bilangan yang paling rendah (minimal), level di atasnya bilangan dengan nilai maksimal, level di atasnya lagi nilai minimal lagi dan seterusnya.
+Diberikan beberapa bilangan yang akan disusun menjadi AVL Tree. Lalu, dilakukan input berupa bilangan yang dicari selisih antara `parent`nya dengan `sibling` dari `parent`nya. Lalu, dikeluarkan output berupa `selisih` tersebut. Jika bilangan yang dicari terdapat pada `root`, dikeluarkan `0`.
 ### Penjelasan Solusi
-Permasalahan Penomoran Garasi Saha dapat diselesaikan dengan menggunakan `BST` dan traversal `level order`/`BFS` yang telah dimodifikasi (`__bst__levelorder`) serta struktur data `Queue` yang menyimpan data dalam bentuk `BSTNode` dan ditambahkan data tentang `level` node tersebut dalam tree. Adapun hal yang dilakukan dalam fungsi `__bst__levelorder` adalah menginisialisasi 2 struktur data `queue`. Queue `myQ` digunakan untuk melakukan `BFS` seperti biasanya, sedangkan `nuQ` berfungsi untuk menyimpan data dari queue `myQ`. Hal ini dilakukan karena untuk melakukan proses traversal, __harus__ dilakukan pop pada `myQ`, sehingga pada akhirnya `myQ` akan kosong.
-Pertama, `myQ` akan diisi dulu dengan nilai root dari tree (`queue_push(&myQ, *root, 1)`, 1 merupakan level dari node root tree). Lalu, dibuat variabel `level` yang diinisialisai nilainya `0`. Variabel `level` di sini berfungsi untuk menyimpan berapa banyak level dalam tree, sehingga dapat dikirimkan ke fungsi `printLevel`. 
+Persoalan diselesaikan dengan AVL Tree. Implementasi AVL Tree yang digunakan kali ini menggunakan node yang memiliki member `data`, `left`, dan `right`. Oleh karena itu, penyelesaian dapat dilakukan dengan bantuan 3 pointer. `p3` menunjuk pada node dengan `data` sesuai dengan bilangan yang diinput, `p2` menunjuk `parent` dari node tersebut, dan `p1` menunjuk `parent` dari `parent` tersebut agar kita dapat mengakses `sibling` dari `parent`.
 
-Kemudian, dilakukan perulangan `while` selama `myQ` tidak kosong. Isi dari perulangan tersebut adalah mempush front dari `myQ` ke `nuQ`. Lalu, dilakukan traversal, yaitu `push` `left` dan `right` dari node yang disimpan dalam front `myQ`, dan levelnya ditambah 1 (`(myQ._front->depth)+1`), dan variabel `level` ditambah 1. Kemudian, `myQ` di`pop`.
+Pertama, buat sebuah AVL Tree bernama `myAVL` dan inisialisasi dengan `avl_init`. Lalu, buat variabel `Q` untuk menyimpan banyak bilangan yang ingin diinput ke tree, `T` untuk menyimpan banyak bilangan yang akan dicari, `tmp` untuk mengambil bilangan yang ingin diinput, dan `X` untuk mengambil bilangan yang akan dicari.
 
-Di dalam fungsi `printLevel`, yang dilakukan adalah membuat suatu array yang berukuran `level`. Array ini berfungsi untuk menyimpan nilai max/min dari masing-masing level tree. Lalu, array tersebut diinisialisasi dengan dua anggota pertama dari `queue` (karena root tidak memiliki "saudara" dan untuk mempermudah perbandingan untuk level 2). Kemudian, dijalankan perulangan selama `queue` tidak kosong. `if(depth == p->depth)` berfungsi untuk memeriksa apakah `front` dari `queue` satu `level` dengan anggota array sehingga perlu dibandingkan. 
-- Jika iya, terdapat `if-else` yang berfungsi memeriksa apakah diambil nilai yang terkecil antara kedua nilai atau terbesar. Karena polanya adalah min-max-min dari level terbawah, maka jika level terbawah ganjil, tiap level ganjil akan mengambil nilai minimum, yang genap akan mengambil nilai maksimum dan sebaliknya. Hal ini diuji dengan `depth%2 == level%2`. Kemudian, di dalam `if-else` tersebut berisi `if` yang memeriksa apakah anggota array perlu diganti atau tidak.
+Lalu, diambil input untuk `Q` dan`T`.
+Selanjutnya, dilakukan loop sebanyak `Q` kali untuk memasukkan bilangan ke tree (`avl_insert`). Kemudian, dilakukan loop sebanyak `T` kali untuk mendapatkan input untuk `X` dan mendapatkan selisih antara `parent` dari `X` dengan saudaranya (fungsi `searchDif`).
 
-- Jika tidak, tidak dibandingkan, dan pemeriksaan dilanjutkan pada level selanjutnya. Dalam kode ini ditunjukkan sebagai
-```
-depth++;
-arr[depth-1] = p->data.key;
-```
-Kemudian, dilakukan `pop` pada `queue` sehingga dapat memeriksa anggota `queue` selanjutnya.
-Terakhir, keluarkan nilai array dari index terbesar ke 0.
+Fungsi `searchDif` menerima parameter pointer ke `AVLNode` (`root`), yaitu akar dari AVL Tree, dan `int` (`value`), yaitu nilai yang dicari. Di dalamnya, pertama, diinisialisasi tiga pointer, `p1`, `p2`, dan `p3`, menunjuk ke `root`. Kemudian, dibuat suatu variabel `depth` bernilai 1. Fungsinya adalah untuk mentrack `p3` menunjuk ke node tingkat berapa. Dengan demikian, `p1` dan `p2` dapat dipindah dengan sesuai.
 
-Dalam fungsi main, dilakukan penerimaan input dan pemanggilan fungsi yang telah dijabarkan. Pertama, akan diterima input banyak anggota tree yang disimpan dalam variabel `n`. Kedua, ada loop `for` untuk memasukkan anggota tree sesuai input. Ketika loop berakhir, tree `myTree` dikirimkan ke fungsi `bst_levelorder` yang akan mengirim nilai rootnya ke `__bst__levelorder`.
+Selanjutnya dilakukan loop yang akan berhenti saat `p3` bernilai `NULL` atau saat `p3` menyimpan data sesuai nilai yang diminta.
+
+> Pada `depth == 1`, menandakan `p3` ada di root, sehingga `p1` dan `p2` belum perlu dipindah. Ketika `depth > 1` menandakan `p3` ada ditingkat kedua, dan jika belum merupakan bilangan yang dicari, `p2` sudah berpindah menjadi `p3`, karena `p3` akan diubah nilainya menjadi child dari `p3` itu sendiri. Hal yang sama terjadi saat `depth > 2` pada `p1` dengan `p2`, di mana `p1` akan pindah ke posisi `p2`.
+
+Jika nilai ditemukan, dikeluarkan output seperti berikut:
+- Kalau `p3` adalah `root` keluarkan `0`.
+- Kalau `p2` adalah `root` (parent dari node yang dicari), keluarkan nilai yang disimpan pada node yang ditunjuk `p2`, karena `root` tidak memiliki *sibling*.
+- Di luar kondisi di atas: 
+    - Kalau `p1` hanya memiliki satu `child`, keluarkan nilai yang disimpan oleh node `p2`.
+    - Kalau tidak, keluarkan selisih dari `p1->right->data` dengan `p1->left->data`.
 
 ### Visualisasi Solusi
-Untuk mempermudah visualisasi solusi dari permasalahan Penomoran Garasi Saha, digunakan sample input berikut:
+Untuk mempermudah visualisasi solusi dari permasalahan Nadut Belajar, digunakan sample input berikut:
 
 ```
+6 3
+7 10 21 45 30 29
 7
-500
-250
-750
-125
-375
-625
-875
+30
+29
 ```
 
-Setelah nilai-nilai tersebut dimasukkan dalam tree, maka akan terjadi operasi seperti berikut.
+txt
 
 ![pgs1](/img/si_pgs1.gif)
 
-Melakukan operasi `BFS` dengan bantuan queue `myQ`, dan menyimpan data dalam `nuQ`
+txt
 
 ![pgs2](/img/si_pgs2.JPG)
 
-Membuat array sebesar `level`
+/
 
 ![pgs3](/img/si_pgs3.JPG)
 
-Mengisi index pertama dengan nilai `root`.
+/
 
 ![pgs4a](/img/si_pgs4a.JPG)
 ![pgs4b](/img/si_pgs4b.JPG)
 
-Mengisi index kedua dengan nilai `root->left`, kemudian membandingkannya dengan anggota tree yang se`level`. Karena banyak `level` 3, dan level yang dibandingkan adalah `level` 2, diambil nilai yang terbesar (`750`).
+/
 
 ![pgs5a](/img/si_pgs5a.JPG)
 
-Karena `front` dari `queue` sekarang berbeda `level` dengan anggota array pada index sekarang, index selanjutnya diisi dengan nilai `front` tersebut
+/
 
 ![pgs5b](/img/si_pgs5b.gif)
 
-Kemudian, anggota `queue` dibandingkan dengan anggota array pada index sekarang. Karena yang diminta pada `level` ini adalah nilai minimun, tidak terjadi perubahan pada array. 
+/
 
 ![pgs6](/img/si_pgs6.JPG)
 
-Keluarkan (`printf`) anggota `arr` dari index terbesar sampai 0.
+/
 
 Output:
 ```
-125 750 500
+20
+21
+20
 ```
 
-## Roni Suka Merah
+## Bucyn
 ### Verdict
 AC saat praktikum
 #### Bukti
-![verdict_rsm](/img/verdict_rsm.jpg)
+![verdict_bc](/img/verdict_bc.jpg)
 ### Penjelasan Soal
-Diberikan beberapa bilangan yang lalu disusun dalam sebuah tree. Kemudian, diminta untuk mengeluarkan anggota tree sesuai dengan contoh output dan clue yang diberikan
+Diminta untuk menyusun kaset episode drakor dengan sistem penumpukannya seperti AVL Tree. 
+
+Jika input adalah `Taro` dan sebuah bilangan, berarti masukkan kaset episode tersebut ke tumpukan.
+
+Jika input adalah `Cari` dan sebuah bilangan, berarti cari tahu kaset ada di tumpukan berapa. Jika kaset ditemukan, keluarkan `Kasetnya ada di tumpukan ke - n` dengan n adalah posisi kaset di tumpukan. Jika kaset tidak ditemukan. keluarkan `Kasetnya gak ada!`.
+
+Jika input tidak sesuai dengan kedua input di atas, keluarkan `AKU TUH GATAU HARUS NGAPAIN!`.
 ### Penjelasan Solusi
-Dari input-output yang dihasilkan pada soal (Input: `6 1 8 12 3 7`, Output: `1 3 6 7 8 12`) dan clue, disimpulkan bahwa output merupakan hasil traversal inorder dengan operasi print.
+Masalah Bucyn dapat diselesaikan dengan traversal inorder dengan operasi yang dilakukan adalah meng-*increment* suatu variabel penghitung. Melalui contoh output yang diberikan pada sample case, dapat dilihat bahwa kaset akan berada pada tumpukan ke-n, dengan n adalah urutan bilangan jika dilakukan traverse inorder.
 
-Dalam fungsi main:
+Dengan demikian, dibuat suatu fungsi `inorder_order` yang menerima parameter `AVLNode *root`, `int *count`, `int query`, dan `bool *isFound`:
+- `*count` untuk menghitung pada urutan ke berapa nilai yang dicari.
+- `query` untuk menyimpan nilai yang dicari.
+- `*isFound` untuk mengetahui apakah nilai sudah ditemukan, sehingga dapat kembali "secara langsung" ke fungsi utama.
 
-Dibuat suatu `binary search tree` yang bernama `set`, berfungsi untuk menyimpan data dan variabel `N` untuk menyimpan berapa banyak anggota dari `tree` yang akan dibuat. Lalu, program meminta input untuk disimpan dalam N. Selanjutnya, dilakukan loop `for` sebanyak `N` kali. Dalam loop, nilai yang diinput dimasukkan ke dalam `tree` (`bst_insert`) dibantu oleh variabel `num`. Setelah loop selesai, `set` akan dikirim ke fungsi `bst_inorder`. Fungsi tersebut akan mengirim `root` dari `set` ke `__bst__inorder`. Fungsi ini akan melakukan operasi yang akan mengeluarkan nilai anggota-anggota dari sebelah kiri node yang dikirimkan ke fungsi, lalu nilai node itu sendiri, lalu nilai anggota-anggota yang berada di sebelah kanan node tersebut. Lebih jelasnya dapat dilihat di "Visualisasi Solusi".
+Fungsi `inorder_order` setelah menerima parameter, akan mengecek apakah `root` itu ada. Jika iya, dilakukan pemanggilan ke `inorder_order` dengan mengirimkan parameter `root->left` daripada `root`. Kemudian, setelah pemanggilan tersebut selesai dilakukan, jika `root->data==query` (data ditemukan), ubah `isFound` menjadi `true`, dan `return`. Jika `root` tidak menyimpan data yang diinginkan, *increment* `*count` dengan 1. Lalu, lakukan juga pemanggilan fungsi `inorder_order`dengan `root->right`.
+
+Di dalam fungsi `main`, diinisialisasi `AVL Tree` bernama `myAVL`. Kemudian, diinisialisasi juga pointer bertipe `AVLNode` yaitu `pAvl`.
+Lalu, dibuat variabel integer `T` untuk menyimpan banyak testcase dan `I` untuk mengambil bilangan yang ingin dimasukkan/dicari ke/di `AVL Tree`. Lalu, diambil input untuk `T`. Selanjutnya, dilakukan loop sebanyak `T` kali.
+Di dalam loop, dibuat `array of char` bernama `cmd`. Lalu, diambil input untuk `cmd` dan `I`. 
+- Jika `cmd` adalah `"Taro"`, masukkan nilai `I` ke dalam `AVL Tree`.
+- Jika `cmd` adalah `"Cari"`, cari `I` menggunakan fungsi `_search` dan simpan nilai kembalinya ke `pAvl`. Jika nilainya ada, inisialisasi integer `order` dengan `1` dan boolean `check` dengan `false`, lalu panggil fungsi `inorder_order`.
+  ```c
+  inorder_order(myAvl._root, &order, I, &check);
+  ```
+  Kemudian, keluarkan `Kasetnya ada di tumpukan ke - order`.
+  
+  Jika nilainya tidak ada, keluarkan `Kasetnya gak ada!`.
+- Jika `cmd` tidak sesuai dengan kedua nilai di atas, keluarkan `AKU TUH GATAU HARUS NGAPAIN!`.
 
 ### Visualisasi Solusi
-Untuk mempermudah visualisasi solusi dari permasalahan Roni Suka Merah, digunakan sample input berikut:
+Untuk mempermudah visualisasi solusi dari permasalahan Bucyn, digunakan sample input berikut:
 
 ```
 6
@@ -149,39 +172,45 @@ Output:
 1 3 6 7 8 12 
 ```
 
-## MALUR TERHUBUNG
+## Part Time
 ### Verdict
-AC saat revisi
+AC saat praktikum
 #### Bukti
-![verdict_mt](/img/verdict_mt.jpg)
+![verdict_pt](/img/verdict_pt.jpg)
 ### Penjelasan Soal
-Diberikan beberapa bilangan yang dibentuk menjadi `Binary Search Tree`. Lalu, diberikan 2 bilangan. Kemudian, diminta mengeluarkan hasil penjumlahan dari subtree yang menghubungkan kedua bilangan tersebut.
+Diminta program yang dapat mengarsip barang yang memiliki `id` dan `harga`. Lalu, akan diberikan penjualan pada hari itu berupa jumlah barang dan id barang. Output yang dikeluarkan dalam kondisi yang seharusnya (id terurut dan id dicari ada) adalah `Z`, total pendapatan. Dalam kondisi id tidak terurut saat input, output yang dikeluarkan adalah `ID harus urut` dan program dihentikan. Ketika id barang yang dicari tidak ada, output yang dikeluarkan `Maaf barang tidak tersedia` dan program dilanjutkan.
 ### Penjelasan Solusi
-Pertama, diinisialisasi sebuah `tree` bernama `set`. Lalu, didefinisikan variabel:
-- `N` : untuk menyimpan banyak anggota `tree`.
-- `Q` : untuk menyimpan banyak pasangan bilangan yang akan dicari penjumlahan subtree yang menghubungkan keduanya.
-- `L` : untuk menyimpan bilangan pertama dari pasangan tersebut. 
-- `R` : untuk menyimpan bilangan kedua dari pasangan tersebut.
-- `A` : untuk menyimpan sementara nilai yang ingin dimasukkan ke dalam tree.
-- `sum` : untuk menyimpan penjumlahan dari subtree.
+Penyelesaian masalah Part Time dapat diselesaikan dengan menambahkan member integer `price` ke AVLNode untuk menyimpan harga dari barang. Dengan demikian, fungsi `_avl_createNode`, `_insert_AVL`, dan `avl_insert` ditambahkan parameter `int price`, juga pada `_avl_createNode` ditambahkan `newNode->price = price;` untuk menambahkan harga ke node.
 
-Lalu, program meminta input yang akan disimpan ke variabel `N` dan `Q`. Kemudian, dijalankan loop `for` sebanyak `N` kali. Dengan bantuan variabel `A`, input dimasukkan ke dalam `tree` `set`. Selesai loop tersebut, program menjalankan lagi loop `for` sebanyak `Q` kali. Di dalam loop, program meminta input pasangan bilangan yang akan dicari penghubungnya, disimpan dalam `L` dan `R`. `sum` diinisialisasi dengan `0`. Kemudian, dilakukan `if-else`:
-- Jika nilai `L` dan `R` ada di dalam `tree`, kirimkan alamat `set` `L`, `R`, dan alamat `sum` ke fungsi `findPath`. `findPath` kemudian mengirim `root` dari `set`, `L`, `R`, dan alamat `sum`. Di dalam fungsi `find_path` dilakukan beberapa evaluasi dalam `if-else`:
-    - Jika nilai `L` dan `R` sama-sama lebih kecil dari node, panggil kembali fungsi `find_path`, tapi node diganti dengan `node->left`.
-    - Jika sama-sama lebih besar dari nilai node, panggil kembali fungsi `find_path`, tapi node diganti dengan `node->left`.
-    -Selain kondisi yang telah disebutkan, berarti node adalah __akar yang sama yang terdekat__ dari `L` dan `R`, sehingga lakukan fungsi `addInorder` dengan parameter node tersebut dan `sum`.
-    Fungsi `addInorder` bekerja dengan menambahkan nilai dari node paling kiri sampai node paling kanan.
-    Setelah fungsi tersebut dilaksanakan, print nilai `sum`.
-- Jika tidak, keluarkan `-1`.
+Pertama, inisialisasi sebuah AVL Tree bernama `myAVL`, integer `P` (untuk ID) dan `Z` (untuk menyimpan penjumlahan pendapatan) dengan `0`, dan dibuat integer bernama `M` (banyak ID barang), `N`(banyak jenis barang yang terjual), `Q` (harga barang), `X` (banyak barang yang terjual), `Y` (ID barang yang dicari), dan `temp` (menyimpan sementara input ID). Lalu, ambil input untuk `M` dan `N`. Lalu, dilakukan loop sebanyak `M`.
+
+Di dalam loop:
+> Ambil nilai untuk `temp`. Kemudian, uji `temp` apakah sama dengan `p+1`. Hal ini dilakukan untuk menguji apakah ID yang diinput urut. Jika tidak, maka keluarkan `ID harus urut` dan langsung keluar dari program. Jika urut, buat `P=temp`, ambil input harga (`Q`), dan masukkan `P` dan `Q` ke `myAVL` (`avl_insert(&myAVL, P, Q)`).
+
+Kemudian, inisialisasi sebuah pointer bertipe `AVLNode` bernama `p`. Lalu, dilakukan loop sebanyak `N` kali.
+
+Di dalam loop:
+> Ambil nilai untuk `X` dan `Y`.
+> - Jika barang tidak ada (`!avl_find(&myAVL, Y)`), keluarkan `Maaf barang tidak tersedia` dan lanjut ke iterasi berikutnya.
+>- Jika barang ada, isi `p` dengan nilai dari fungsi `_search` yang dikirim parameter `myAVL._root` dan `Y`. Lalu, tambahkan `p->price` dikali `X` ke `Z`.
+
+Setelah loop selesai, keluarkan nilai `Z`.
 
 ### Visualisasi Solusi
-Untuk mempermudah visualisasi solusi dari permasalahan MALUR TERHUBUNG, digunakan sample input berikut:
+Untuk mempermudah visualisasi solusi dari permasalahan Part Time, digunakan sample input berikut:
 
 ```
-8 2
-8 3 10 1 6 14 4 7 
-1 4  
-4 9
+5 5
+1 13000
+2 5500
+3 8750
+4 21900
+5 30000
+4 4
+2 3
+2 1
+1 7
+3 2
 ```
 __Untuk input `1 4`__
 ![mt1](/img/si_mt1.JPG)
@@ -216,70 +245,37 @@ __Untuk input `4 9`__
 
 Output:
 ```
-21
--1
+Maaf barang tidak tersedia
+147600
 ```
 
-## Nadut Gabut
+## Kata-Kata
 ### Verdict
-AC saat revisi
+AC saat praktikum
 #### Bukti
-![verdict_ng](/img/verdict_ng.jpg)
+![verdict_kk](/img/verdict_kk.jpg)
 ### Penjelasan Soal
-Diberikan beberapa bilangan yang disusun menjadi Binary Search Tree. Lalu, diberikan bilangan. Diminta untuk mencari apakah bilangan tersebut dapat dihasilkan dari penjumlahan 3 anggota tree yang bertetangga, dan mengeluarkan output seperti yang dicontohkan dalam soal.
+Diminta program yang dapat menyimpan `n` kata dan dapat mencari kata sebanyak `q`. Output yang dihasilkan adalah `1` jika kata yang dicari tersimpan dan `0` jika kata yang dicari bukan merupakan kata yang tersimpan.
 ### Penjelasan Solusi
-Pertama, diinisialisasi sebuah tree bernama `set`, dan didefinisikan variabel `P` dan `N`. Lalu, untuk mengetahui banyak anggota tree, diambil input yang disimpan dalam variabel `P`. Setelahnya dilakukan loop `for` sebanyak `P` kali yang berfungsi untuk memasukkan nilai ke tree dengan bantuan variabel `Q`. Setelah loop selesai, diambil input bilangan query yang disimpan dalam `N`. Lalu, buat variabel `bool` `check` yang menerima kembalian dari fungsi `findSum` dengan parameter `&set` dan `N`. Jika `check` bernilai `true`, keluarkan `Penjumlahan angka di tree yang menghasilkan N ditemukan`. Jika tidak, keluarkan `Tidak ditemukan penjumlahan angka di tree yang menghasilkan N`.
+Penyelesaian masalah Kata-Kata, digunakan struktur data `Trie`, yang dapat menyimpan data kata lebih efisien. Struktur data `Trie` adalah pengembangan dari `Tree`, tetapi yang disimpan bukan `data`, melainkan `array of pointer`. Index dari `Array of pointer` ini menandakan karakter apa yang "disimpan". Sebagai contoh, karena soal memberikan kata yang terdiri atas `a-z` (huruf kecil), index 0 menandakan huruf `a`, dan index 25 menandakan huruf `z`.
 
-#### __Penjelasan fungsi `findSum`__
+Pertama, diinisialisasi sebuah pointer `TrieNode` bernama `root` yang akan menjadi akar dari struktur `Trie`. Lalu, dibuat integer `n` (untuk ) dan `q` (untuk ), dan *array of char* bernama `str`.
+Selanjutnya, terima input untuk `n` dan lakukan loop sebanyak `n` kali. Dalam loop, terima input untuk kata yang akan dimasukkan ke Trie dengan `str` dan masukkan ke dalam Trie (`insert(root, str)`).
 
-Fungsi `findSum` akan mengirimkan parameter yang diterimanya ke `__findSum`, **kecuali** parameter tree diganti dengan root dari tree.
-
-Kombinasi dari 3 angka pada `tree` ada 5 kemungkinan:
-1. `root+left+right`
-2. `root+left+left's left`
-3. `root+left+left's right`
-4. `root+right+right's left`
-5. `root+right+right's right`
-
-Semua variasi diperiksa dengan menggunakan fungsi-fungsi yang dipanggil pada fungsi `__findSum`.
-
-Visualisasi dari fungsi-fungsi yang digunakan dalam `__findSum` adalah sebagai berikut:
-1. `sumParent`
-
-    ![bd_ng1](/img/bd_ng1.JPG)
-
-2. `sumBranchRight`
-
-    ![bd_ng2a](/img/bd_ng2a.JPG)
-    ![bd_ng2b](/img/bd_ng2b.JPG)
-
-3. `sumBranchLeft`
-
-    ![bd_ng3a](/img/bd_ng3a.JPG)
-    ![bd_ng3b](/img/bd_ng3b.JPG)
-
-Proses yang terjadi dalam fungsi `__findSum`:
-
-Pertama, sebuah variabel `bool` `check` diinisialisasi dengan nilai `false`. Variabel ini berfungsi untuk menyimpan kembalian dari fungsi `__findSum` yang dilakukan pada node sebelah kiri dan kanan dari node sekarang (`root`).
-Lalu, jika `root->left` dan `root->right` ada isinya, lakukan fungsi `sumParent`. Jika nilainya sama dengan `query`, kembalikan `true`. Jika tidak, lanjut kode di bawahnya
-
-Jika `root->right` ada nilainya,
-- Jika `root->right->right` ada nilainya, lakukan fungsi `sumBranchRight` pada node `root->right`. Jika nilai kembaliannya sama dengan `query`, kembalikan nilai `true`
-- Jika `root->right->left` ada nilainya, lakukan operasi yang sejenis dengan operasi di atas.
-
-Jika belum juga ada yang mengembalikan nilai `true`, maka lakukan operasi yang sejenis dengan operasi `root->right` pada `root->left`.
-
-Jika masih belum ditemukan nilai `true`, lanjutkan ke kode di line selanjutnya.
-
-Jika `root->left` ada, buat `check` = nilai kembalian dari fungsi `__findSum` yang dimulai dari sub-node kiri dari node yang sekarang. Jika `check` nilainya `true`, langsung return `true`. Jika tidak, lakukan operasi yang sejenis pada `root->right`. Jika `check` tidak juga bernilai `true`, kembalikan nilai `false`.
+Selanjutnya, terima input untuk `q` dan lakukan loop sebanyak `q` kali. Di dalam loop, ambil input kata yang akan dicari dengan `str`, lalu cari dengan fungsi `search` (`search(root, str)`). Jika ditemukan, keluarkan `1`. Jika tidak, keluarkan `0`.
 
 ### Visualisasi Solusi
 Untuk mempermudah visualisasi solusi dari permasalahan Nadut Gabut, digunakan sample input berikut:
 
 ```
-10
-73 66 91 53 72 77 98 74 78 79
-266
+3
+soalnya
+mudah
+dipahami
+3
+dan
+soalnya
+singkat
 ```
 
 ![ng1a](/img/si_ng1a.JPG)
@@ -306,32 +302,104 @@ Memeriksa `sumParent` dari node 91. Karena `==query`, `check=true`, dan pada akh
 
 Output:
 ```
-Penjumlahan angka di tree yang menghasilkan 266 ditemukan
+0
+1
+0
 ```
 
-## Genjil Ganap V2
+## Cayo Niat
 ### Verdict
 AC saat revisi
 #### Bukti
-![verdict_ggv2](/img/verdict_ggv2.jpg)
+![verdict_cn](/img/verdict_cn.jpg)
 ### Penjelasan Soal
-Diminta untuk membuat tree yang hanya berisi bilangan genap dari input yang diberikan, dengan ketentuan jika ada input bilangan ganjil, bilangan genap yang diinput sebelumnya akan dihapus dari tree.
+Diminta program untuk menerima input kata-kata yang berantakan (terdapat spasi yang panjangnya tidak teratur di antara kata) dan ada beberapa kata yang diulang, lalu dikeluarkan output berupa kata-kata berurutan A-Z-a-z ditambah numbering di depannya dan 1 line selanjutnya berupa kata-kata yang diurutkan, tetapi di antara kata diisi `--<3--`. 
 ### Penjelasan Solusi
-Masalah Genjil Ganap V2 diselesaikan dengan struktur data `binary search tree` dan `array`. BST digunakan sebagai ADT utama untuk menyimpan data, sedangkan array digunakan untuk mengingat urutan masuknya data sehingga dapat digunakan sebagai referensi untuk menghapus bilangan genap yang terakhir dimasukkan.
-Jika tree kosong (`bst_isEmpty(&set)`), dikeluarkan `Tree Kosong!`.Jika tidak, dikeluarkan anggota tree dengan traversal `inorder`.
+Masalah Cayo Niat dapat diselesaikan dengan melakukan loop sampai `EOF` untuk menginput data ke AVL Tree dan melakukan traversal inorder untuk mengeluarkan output.
 
-__Implementasi:__
+Agar AVL Tree dapat menyimpan string, data pada `AVLNode` tipenya diubah menjadi `array of char` dan dilakukan penyesuaian pada fungsi lainnya (mengganti *assigment* dan *comparation* dengan `strcmp`). Karena fungsi `avl_insert` hanya akan memasukkan kata jika tidak ada dalam tree, masalah kata yang dapat ditulis berkali-kali terselesaikan.
 
-Diinisialisasi sebuah `binary search tree` bernama `set`, variabel `N`. Program menerima input yang disimpan dalam variabel `N`, yaitu banyak bilangan yang akan dicoba untuk dimasukkan ke `tree`. Lalu, dibuat array integer sebesar `N` yang bernama `N` dan integer `size` (diinisialisasi bernilai `0`). `size` berfungsi untuk mempermudah mengetahui banyak anggota tree sehingga untuk menginput dan mengakses data pada `arr` lebih mudah.
-Setelah itu, dilakukan loop `for` sebanyak `N` kali. Isi dari loop adalah:
+Fungsi `inorder` menerima parameter `AVLNode *root` (menerima alamat node) dan `int *index` (menerima alamat integer yang akan dipakai untuk menghitung urutan anggota tree). Fungsi ini melakukan traversal inorder dengan operasi yang dilakukan adalah meng*increment* nilai `*index`, lalu mengeluarkan nilai `*index` + `". "` + `root->data` (string yang disimpan pada node).
 
-Pertama, input bilangan dan disimpan dalam variabel `num`.
+Fungsi `inorderluv` menerima parameter sama seperti fungsi `inorder` dan juga melakukan traversal inorder. Melalui *sample case* dapat dilihat setiap string diawali `--<3--`, kecuali string yang pertama. Oleh karena itu, pada fungsi `inorderluv`, terdapat `if` untuk mengecek apakah `*index > 0`. Jika iya, barulah diprint `--<3--`. Lalu, keluarkan string yang terdapat pada node (`root->data`). Kemudian, `increment` `*index`.
 
-Kedua, periksa apakah input genap (`if(num%2==0)`).
-- Jika iya, nilai input dimasukkan ke `set`, simpan nilainya di `arr[size]`, size di*increment*.
-- Jika tidak, jika `set` tidak kosong, hapus (`remove`) nilai yang terdapat pada `array[size-1]` dari `set`. Lalu, `size` di*decrement*.
+Di dalam fungsi `main`:
 
-Saat loop sudah selesai dijalankan, diperiksa apakah tree kosong atau tidak. Jika kosong, dikeluarkan `Tree Kosong!`. Jika tidak, keluarkan anggota `tree` secara traversal `inorder`.
+Pertama, inisialisasi sebuah AVL Tree bernama `avlku` untuk menyimpan data. Kemudian, buat sebuah `array of char` bernama `str`. Kemudian, buat sebuah loop yang akan berhenti jika input adalah `EOF` (`while(scanf("%1000s", str) != EOF)`). Di dalam loop, nilai `str` dimasukkan ke `avlku` menggunakan fungsi `avl_insert` (pengambilan input dilakukan dalam *test expression* dari loop). Selanjutnya, diinisialisasi sebuah integer bernama `index` dengan nilai `0`. Selanjutnya, panggil fungsi `inorder` dengan mengirim `avlku._root` dan alamat `index`. Kemudian, `index` di*reset* ke nilai `0`. Lalu, dipanggil fungsi `inorderluv` dengan parameter `avlku._root` dan alamat `index`.
+
+### Visualisasi Solusi
+Untuk mempermudah visualisasi solusi dari permasalahan Genjil Ganap V2, digunakan sample input berikut:
+
+```
+7
+6
+4
+5
+8
+7
+12
+10
+```
+
+![ggv2_1](/img/si_ggv2_1.JPG)
+
+Inisialisasi tree dan definisi array berukuran `7`.
+
+![ggv2_2a](/img/si_ggv2_2a.JPG)
+![ggv2_2b](/img/si_ggv2_2b.JPG)
+
+Input 6 genap, masuk ke tree dan array, dan `size++`. Sama juga dengan input 4.
+
+![ggv2_3](/img/si_ggv2_3.JPG)
+
+Input 5 ganjil, nilai 4 di`remove` dari tree dan array. `size--`
+
+![ggv2_4](/img/si_ggv2_4.JPG)
+
+Input 8 genap, masuk ke tree dan array, dan `size++`.
+
+![ggv2_5](/img/si_ggv2_5.JPG)
+
+Input 7 ganjil, nilai 8 di`remove` dari tree dan array. `size--`
+
+![ggv2_6a](/img/si_ggv2_6a.JPG)
+![ggv2_6b](/img/si_ggv2_6b.JPG)
+
+Input 12 genap, masuk ke tree dan array, dan `size++`
+Input 10 genap, masuk ke tree dan array, dan `size++`
+
+![ggv2_7](/img/si_ggv2_7.gif)
+
+Agar anggota tree dikeluarkan secara terurut dari nilai terendah ke tertinggi, gunakan traversal `inorder` dengan fungsi `printf`.
+
+Output:
+```
+6 10 12 
+```
+
+## MALUR NGULI
+### Verdict
+WA
+#### Bukti
+![verdict_mn](/img/verdict_mn.jpg)
+### Penjelasan Soal
+Diminta untuk membuat program yang dapat memasukkan bilangan `x` ke AVL Tree saat diberi command `insert x` dan mencetak jumlah dari node yang ada dalam satu kolom, dari kiri ke kanan saat diberi perintah `print`.
+### Penjelasan Solusi
+Soal ini diselesaikan dengan menggunakan operasi mirip traversal, yang terdapat pada fungsi `sumHD`. Node root dianggap sebagai kolom `0`, sedangkan kolom di sebelah kirinya dianggap negatif dan kolom sebelah kanannya dianggap positif (didasarkan pada ide jarak node dari node root). Data kolom ini disimpan dalam variabel `int hd` dalam parameter fungsi `sumHD`. Untuk menyimpan penjumlahan dari node yang sekolom, digunakan array (dalam kode digunakan struktur `spArr`, dengan member `array of int` [untuk menyimpan bilangan] dan `int size` [untuk mengetahui banyaknya kolom]). Karena nilai index dari array tidak dapat negatif, node yang berada pada kolom negatif akan dimasukkan ke `sumNeg->arr`, sedangkan yang positif akan dimasukkan ke `sumPos->arr`. (dipisah)
+
+Operasi yang dilakukan di dalam fungsi `sumHD` adalah 
+- Jika mentraverse ke kiri node, hd akan dikurangi `1`. Jika mentraverse ke kanan, hd akan ditambah `1`. 
+- Lalu, untuk dapat menjumlahkan anggota kolom, diberikan if else. Jika nilai `hd < 0`, maka nilai node tersebut dimasukkan ke `sumNeg->arr` dengan indexnya adalah nilai absolut dari hd. Selain nilai itu, nilai node akan dimasukkan ke `sumPos->arr` dengan indexnya adalah nilai dari hd.
+
+Di dalam fungsi `main`:
+Pertama, inisialisasi sebuah AVL Tree bernama myAVL. Lalu, buat spArr bernama `neg` dan `pos`; integer `N` (mengambil nilai test case) dan `X` (bilangan yang ingin dimasukkan ke AVL Tree); dan array of char `A` (untuk mengambil command).
+Lalu, ambil input untuk `N`. Selanjutnya, lakukan loop sebanyak `N` kali. Setiap iterasi, terjadi pengambilan input `A` dan mengevaluasi nilai `A`:
+- Jika `A` adalah `insert` (`!strcmp(A, "insert")`), minta input untuk `X`, dan masukkan nilai `X` ke myAVL (`avl_insert(&myAVL, X);`)
+- Jika `A` adalah `print` (`!strcmp(A, "print")`):
+  - Jika myAVL kosong, cetak `0` dan lanjut ke iterasi berikutnya.
+  - Jika tidak, inisialisasi `neg` dan `pos` dengan initSpArr agar array di dalam struct tersebut semua anggotanya bernilai `0`. Lalu, panggil fungsi `sumHD` dengan mengirimkan parameter root dari myAVL, alamat `neg`, alamat `pos`, dan `0`.
+  Lalu, lakukan loop untuk menghitung banyak anggota dalam arr dengan menghentikan loop saat nilai dari anggota arr adalah nol (untuk `neg`, pengecekan index dimulai dari `1` (kolom `-1`) sedangkan untuk `pos` dimulai dari `0` (kolom `0`)). Kemudian, cetak nilai dari array dari `neg` secara terbalik (dari index yang terbesar == kolom paling kiri). Setelahnya, cetak nilai dari array dari `pos` dari index terkecil ke terbesar.
+- Jika `A` bukan kedua nilai di atas, lewati iterasi.
 
 ### Visualisasi Solusi
 Untuk mempermudah visualisasi solusi dari permasalahan Genjil Ganap V2, digunakan sample input berikut:
