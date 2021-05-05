@@ -31,48 +31,44 @@ Jika nilai ditemukan, dikeluarkan output seperti berikut:
 Untuk mempermudah visualisasi solusi dari permasalahan Nadut Belajar, digunakan sample input berikut:
 
 ```
-6 3
+6 1
 7 10 21 45 30 29
 7
-30
-29
 ```
 
 txt
 
-![pgs1](/img/si_pgs1.gif)
+![nb1](/img/si_nb1.gif)
 
 txt
 
-![pgs2](/img/si_pgs2.JPG)
+![nb2](/img/si_nb2.JPG)
 
 /
 
-![pgs3](/img/si_pgs3.JPG)
+![nb3](/img/si_nb3.JPG)
 
 /
 
-![pgs4a](/img/si_pgs4a.JPG)
-![pgs4b](/img/si_pgs4b.JPG)
+![nb4a](/img/si_nb4a.JPG)
+![nb4b](/img/si_nb4b.JPG)
 
 /
 
-![pgs5a](/img/si_pgs5a.JPG)
+![nb5a](/img/si_nb5a.JPG)
 
 /
 
-![pgs5b](/img/si_pgs5b.gif)
+![nb5b](/img/si_nb5b.gif)
 
 /
 
-![pgs6](/img/si_pgs6.JPG)
+![nb6](/img/si_nb6.JPG)
 
 /
 
 Output:
 ```
-20
-21
 20
 ```
 
@@ -116,52 +112,53 @@ Di dalam loop, dibuat `array of char` bernama `cmd`. Lalu, diambil input untuk `
 Untuk mempermudah visualisasi solusi dari permasalahan Bucyn, digunakan sample input berikut:
 
 ```
-6
-6
-1
-8
-12
-3
 7
+Taro 100
+Taro 74
+Cari 100
+Taro 152
+Taro 21
+Taro 33
+Cari 100
 ```
 
-![rsm1](/img/si_rsm1.JPG)
+![bc1](/img/si_bc1.JPG)
 
 Membuat `tree` dari input-input yang diberikan.
 
-![rsm2](/img/si_rsm2.JPG)
+![bc2](/img/si_bc2.JPG)
 
 Memulai dari node `root`, yaitu 6. 
 
-![rsm3](/img/si_rsm3.JPG)
+![bc3](/img/si_bc3.JPG)
 
 Karena ada node disebelah kiri node 6, fungsi `inorder` untuk node kiri akan dijalankan terlebih dahulu.
 
-![rsm4](/img/si_rsm4.JPG)
+![bc4](/img/si_bc4.JPG)
 
 Tidak ada node di kiri node 1, sehingga keluarkan 1.
 
-![rsm5](/img/si_rsm5.JPG)
+![bc5](/img/si_bc5.JPG)
 
 `inorder` dilakukan pada node sebelah kanan dari node 1, yaitu node 3. Karena disebelah kiri dan kanan dari node 3 tidak ada, maka di `print` 3 saja.
 
-![rsm6](/img/si_rsm6.JPG)
+![bc6](/img/si_bc6.JPG)
 
 Karena operasi `inorder` pada node-node di sebelah kiri node 6 sudah selesai, print 6.
 
-![rsm6](/img/si_rsm7.JPG)
+![bc6](/img/si_bc7.JPG)
 
 Kemudian, lanjut ke node sebelah kanan dari node 6, yaitu node 8.
 
-![rsm6](/img/si_rsm8.JPG)
+![bc6](/img/si_bc8.JPG)
 
 Karena di kiri node 8 ada node 7, dan node 7 tidak memiliki `child`/`kiri`-`kanan`, print 7.
 
-![rsm6](/img/si_rsm9.JPG)
+![bc6](/img/si_bc9.JPG)
 
 Lalu, print 8.
 
-![rsm6](/img/si_rsm10.JPG)
+![bc6](/img/si_bc10.JPG)
 
 Lanjut ke kanan node 8,, yaitu node 12. Karena node 12 juga tidak ada kiri kanannya, print 12.
 
@@ -169,7 +166,10 @@ Traversal `inorder` selesai.
 
 Output:
 ```
-1 3 6 7 8 12 
+Kasetnya ada di tumpukan ke - 2
+Kasetnya ada di tumpukan ke - 4
+Kasetnya gak ada!
+AKU TUH GATAU HARUS NGAPAIN!
 ```
 
 ## Part Time
@@ -213,33 +213,33 @@ Untuk mempermudah visualisasi solusi dari permasalahan Part Time, digunakan samp
 3 2
 ```
 __Untuk input `1 4`__
-![mt1](/img/si_mt1.JPG)
+![pt1](/img/si_pt1.JPG)
 
 Dibuat tree berdasarkan input.
 
-![mt2](/img/si_mt2.JPG)
+![pt2](/img/si_pt2.JPG)
 
 Cari 1 dan 4 dahulu. Karena ditemukan, lanjut ke fungsi `find_path`
 
-![mt3](/img/si_mt3.JPG)
+![pt3](/img/si_pt3.JPG)
 
 Mulai pointer p dari `root`, yaitu node dengan nilai 8. Karena nilainya lebih besar dari kedua nilai yang dicari, pindahkan pointer ke node kirinya (node 3).
 
-![mt4](/img/si_mt4.JPG)
+![pt4](/img/si_pt4.JPG)
 
 Karena 3 lebih dari 1 dan kurang dari 4, node 3 adalah `root` yang sama yang terdekat, sehingga node 3 dikirim ke fungsi `addInorder`.
 
-![mt5](/img/si_mt5.JPG)
+![pt5](/img/si_pt5.JPG)
 
 Fungsi `addInorder` akan menjumlahkan semua anggota subtree dibawah node 3, disimpan pada variabel `*sum` (dalam `find_path` dibuat variabel `sum` dan dikirimkan alamatnya ke `addInorder`)
 
-![mt6](/img/si_mt6.JPG)
+![pt6](/img/si_pt6.JPG)
 
 Kemudian, keluarkan nilai `sum`, yaitu `21`. 
 
 __Untuk input `4 9`__
 
-![mt7](/img/si_mt7.JPG)
+![pt7](/img/si_pt7.JPG)
 
 9 tidak ditemukan dalam `tree`, sehingga keluarkan `-1`.
 
@@ -278,25 +278,25 @@ soalnya
 singkat
 ```
 
-![ng1a](/img/si_ng1a.JPG)
+![kk1a](/img/si_kk1a.JPG)
 
 Memeriksa `sumParent`. Karena belum `==query`, lanjut ke operasi selanjutnya.
 
-![ng1b](/img/si_ng1b.JPG)
+![kk1b](/img/si_kk1b.JPG)
 
 Memeriksa `sumBranchRight` dari subnode `right`. Karena belum `==query`, lanjut ke operasi selanjutnya.
 
-![ng1c](/img/si_ng1c.JPG)
-![ng1d](/img/si_ng1d.JPG)
-![ng1e](/img/si_ng1e.JPG)
+![kk1c](/img/si_kk1c.JPG)
+![kk1d](/img/si_kk1d.JPG)
+![kk1e](/img/si_kk1e.JPG)
 
 Begitupula dengan `sumBranchLeft` dari subnode right, `sumBranchRight` dari subnode `left`, dan `sumBranchLeft` dari subnode `left`, karena belum ==query, lanjut ke operasi selanjutnya.
 
-![ng2](/img/si_ng2.JPG)
+![kk2](/img/si_kk2.JPG)
 
 Memeriksa `sumParent` dari node 66. Karena belum `==query`, dan tidak ada node "cucu", maka lanjut ke node sebelah kanan dari `root`.
 
-![ng3](/img/si_ng3.JPG)
+![kk3](/img/si_kk3.JPG)
 
 Memeriksa `sumParent` dari node 91. Karena `==query`, `check=true`, dan pada akhirnya nilai yang dikembalikan adalah `true`. Oleh karena demikian, keluarkan "Penjumlahan angka di tree yang menghasilkan 266 ditemukan".
 
@@ -331,50 +331,70 @@ Pertama, inisialisasi sebuah AVL Tree bernama `avlku` untuk menyimpan data. Kemu
 Untuk mempermudah visualisasi solusi dari permasalahan Genjil Ganap V2, digunakan sample input berikut:
 
 ```
-7
-6
-4
-5
-8
-7
-12
-10
+Mas      Erki  Guanteng    Poll
+ 
+      Mas     Rifki        Baik Poll
+  
+ Mba                 Inez  Makan   Cintaku   
+ 
+        Aku    Benci   Soal Banyu
+  
+CANDA        Mas Daniel    Saranghae Asdos SDH
 ```
 
-![ggv2_1](/img/si_ggv2_1.JPG)
+![cn_1](/img/si_cn_1.JPG)
 
 Inisialisasi tree dan definisi array berukuran `7`.
 
-![ggv2_2a](/img/si_ggv2_2a.JPG)
-![ggv2_2b](/img/si_ggv2_2b.JPG)
+![cn_2a](/img/si_cn_2a.JPG)
+![cn_2b](/img/si_cn_2b.JPG)
 
 Input 6 genap, masuk ke tree dan array, dan `size++`. Sama juga dengan input 4.
 
-![ggv2_3](/img/si_ggv2_3.JPG)
+![cn_3](/img/si_cn_3.JPG)
 
 Input 5 ganjil, nilai 4 di`remove` dari tree dan array. `size--`
 
-![ggv2_4](/img/si_ggv2_4.JPG)
+![cn_4](/img/si_cn_4.JPG)
 
 Input 8 genap, masuk ke tree dan array, dan `size++`.
 
-![ggv2_5](/img/si_ggv2_5.JPG)
+![cn_5](/img/si_cn_5.JPG)
 
 Input 7 ganjil, nilai 8 di`remove` dari tree dan array. `size--`
 
-![ggv2_6a](/img/si_ggv2_6a.JPG)
-![ggv2_6b](/img/si_ggv2_6b.JPG)
+![cn_6a](/img/si_cn_6a.JPG)
+![cn_6b](/img/si_cn_6b.JPG)
 
 Input 12 genap, masuk ke tree dan array, dan `size++`
 Input 10 genap, masuk ke tree dan array, dan `size++`
 
-![ggv2_7](/img/si_ggv2_7.gif)
+![cn_7](/img/si_cn_7.gif)
 
 Agar anggota tree dikeluarkan secara terurut dari nilai terendah ke tertinggi, gunakan traversal `inorder` dengan fungsi `printf`.
 
 Output:
 ```
-6 10 12 
+1. Aku
+2. Asdos
+3. Baik
+4. Banyu
+5. Benci
+6. CANDA
+7. Cintaku
+8. Daniel
+9. Erki
+10. Guanteng
+11. Inez
+12. Makan
+13. Mas
+14. Mba
+15. Poll
+16. Rifki
+17. SDH
+18. Saranghae
+19. Soal
+Aku--<3--Asdos--<3--Baik--<3--Banyu--<3--Benci--<3--CANDA--<3--Cintaku--<3--Daniel--<3--Erki--<3--Guanteng--<3--Inez--<3--Makan--<3--Mas--<3--Mba--<3--Poll--<3--Rifki--<3--SDH--<3--Saranghae--<3--Soal
 ```
 
 ## MALUR NGULI
@@ -405,48 +425,50 @@ Lalu, ambil input untuk `N`. Selanjutnya, lakukan loop sebanyak `N` kali. Setiap
 Untuk mempermudah visualisasi solusi dari permasalahan Genjil Ganap V2, digunakan sample input berikut:
 
 ```
-7
-6
-4
-5
-8
-7
-12
-10
+9
+insert 20
+insert 10
+insert 15
+insert 9
+insert 6
+insert 25
+insert 24
+insert 26
+print
 ```
 
-![ggv2_1](/img/si_ggv2_1.JPG)
+![mn_1](/img/si_mn_1.JPG)
 
 Inisialisasi tree dan definisi array berukuran `7`.
 
-![ggv2_2a](/img/si_ggv2_2a.JPG)
-![ggv2_2b](/img/si_ggv2_2b.JPG)
+![mn_2a](/img/si_mn_2a.JPG)
+![mn_2b](/img/si_mn_2b.JPG)
 
 Input 6 genap, masuk ke tree dan array, dan `size++`. Sama juga dengan input 4.
 
-![ggv2_3](/img/si_ggv2_3.JPG)
+![mn_3](/img/si_mn_3.JPG)
 
 Input 5 ganjil, nilai 4 di`remove` dari tree dan array. `size--`
 
-![ggv2_4](/img/si_ggv2_4.JPG)
+![mn_4](/img/si_mn_4.JPG)
 
 Input 8 genap, masuk ke tree dan array, dan `size++`.
 
-![ggv2_5](/img/si_ggv2_5.JPG)
+![mn_5](/img/si_mn_5.JPG)
 
 Input 7 ganjil, nilai 8 di`remove` dari tree dan array. `size--`
 
-![ggv2_6a](/img/si_ggv2_6a.JPG)
-![ggv2_6b](/img/si_ggv2_6b.JPG)
+![mn_6a](/img/si_mn_6a.JPG)
+![mn_6b](/img/si_mn_6b.JPG)
 
 Input 12 genap, masuk ke tree dan array, dan `size++`
 Input 10 genap, masuk ke tree dan array, dan `size++`
 
-![ggv2_7](/img/si_ggv2_7.gif)
+![mn_7](/img/si_mn_7.gif)
 
 Agar anggota tree dikeluarkan secara terurut dari nilai terendah ke tertinggi, gunakan traversal `inorder` dengan fungsi `printf`.
 
 Output:
 ```
-6 10 12 
+6 9 45 24 25 26 
 ```
