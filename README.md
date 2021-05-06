@@ -36,36 +36,25 @@ Untuk mempermudah visualisasi solusi dari permasalahan Nadut Belajar, digunakan 
 7
 ```
 
-txt
+![nb1](/img/si_nb1.JPG)
 
-![nb1](/img/si_nb1.gif)
-
-txt
+Semua pointer start di root. 
 
 ![nb2](/img/si_nb2.JPG)
 
-/
+Karena data dari node yang ditunjuk p3 lebih besar dari value, geser p3 ke kiri node. depth + 1.
 
 ![nb3](/img/si_nb3.JPG)
 
-/
+`p3` belum menunjuk node yang sesuai dan depth > 1, p2 pindah ke p3.
 
-![nb4a](/img/si_nb4a.JPG)
-![nb4b](/img/si_nb4b.JPG)
+![nb4](/img/si_nb4.JPG)
 
-/
+Karena data dari node yang ditunjuk p3 lebih besar dari value, geser p3 ke kiri node.
 
-![nb5a](/img/si_nb5a.JPG)
+![nb5a](/img/si_nb5.JPG)
 
-/
-
-![nb5b](/img/si_nb5b.gif)
-
-/
-
-![nb6](/img/si_nb6.JPG)
-
-/
+Node yang ditunjuk p3 memiliki nilai yang dicari, sehingga cetak selisih dari anak-anak node yang ditunjuk p1.
 
 Output:
 ```
@@ -124,52 +113,52 @@ Cari 100
 
 ![bc1](/img/si_bc1.JPG)
 
-Membuat `tree` dari input-input yang diberikan.
+Masukkan 100 dan 74 (command `Taro`)
 
 ![bc2](/img/si_bc2.JPG)
 
-Memulai dari node `root`, yaitu 6. 
+Mencari nilai tumpukan 100. Karena inorder, dari root ke node kiri terlebih dahulu.
 
 ![bc3](/img/si_bc3.JPG)
 
-Karena ada node disebelah kiri node 6, fungsi `inorder` untuk node kiri akan dijalankan terlebih dahulu.
+Nilai node tidak sesuai dengan yang diminta, sehingga *count + 1. Kanan node tidak ada, kembali ke parent node.
 
 ![bc4](/img/si_bc4.JPG)
 
-Tidak ada node di kiri node 1, sehingga keluarkan 1.
+Nilai node merupakan yang diinginkan. return, dan program main mencetak `Kasetnya ada di tumpukan ke - 2`
 
 ![bc5](/img/si_bc5.JPG)
 
-`inorder` dilakukan pada node sebelah kanan dari node 1, yaitu node 3. Karena disebelah kiri dan kanan dari node 3 tidak ada, maka di `print` 3 saja.
+Masukkan 152, 21, dan 33 (command `Taro`)
 
 ![bc6](/img/si_bc6.JPG)
 
-Karena operasi `inorder` pada node-node di sebelah kiri node 6 sudah selesai, print 6.
+Cari 100. Telusur ke kiri dahulu.
 
-![bc6](/img/si_bc7.JPG)
+![bc7](/img/si_bc7.JPG)
 
-Kemudian, lanjut ke node sebelah kanan dari node 6, yaitu node 8.
+Telusur ke kiri lagi.
 
-![bc6](/img/si_bc8.JPG)
+![bc8](/img/si_bc8.JPG)
 
-Karena di kiri node 8 ada node 7, dan node 7 tidak memiliki `child`/`kiri`-`kanan`, print 7.
+Nilai node tidak sesuai dengan yang diminta, sehingga *count + 1. Kanan node tidak ada, kembali ke parent node.
 
-![bc6](/img/si_bc9.JPG)
+![bc9](/img/si_bc9.JPG)
 
-Lalu, print 8.
+Nilai node tidak sesuai dengan yang diminta, sehingga *count + 1. Lanjut ke kanan node.
 
-![bc6](/img/si_bc10.JPG)
+![bc10](/img/si_bc10.JPG)
 
-Lanjut ke kanan node 8,, yaitu node 12. Karena node 12 juga tidak ada kiri kanannya, print 12.
+Nilai node tidak sesuai dengan yang diminta, sehingga *count + 1. Kanan node tidak ada, kembali ke parent dari parent node.
 
-Traversal `inorder` selesai.
+![bc11](/img/si_bc11.JPG)
+
+Nilai node merupakan yang diinginkan. return, dan program main mencetak `Kasetnya ada di tumpukan ke - 4`
 
 Output:
 ```
 Kasetnya ada di tumpukan ke - 2
 Kasetnya ada di tumpukan ke - 4
-Kasetnya gak ada!
-AKU TUH GATAU HARUS NGAPAIN!
 ```
 
 ## Part Time
@@ -212,36 +201,45 @@ Untuk mempermudah visualisasi solusi dari permasalahan Part Time, digunakan samp
 1 7
 3 2
 ```
-__Untuk input `1 4`__
+
 ![pt1](/img/si_pt1.JPG)
 
-Dibuat tree berdasarkan input.
+Modifikasi node untuk menyimpan harga.
 
 ![pt2](/img/si_pt2.JPG)
 
-Cari 1 dan 4 dahulu. Karena ditemukan, lanjut ke fungsi `find_path`
+Masukkan semua input ke dalam tree.
+
+Y = 4, Cari 4. Hasilnya true sehingga lanjutkan operasi dalam loop.
 
 ![pt3](/img/si_pt3.JPG)
 
-Mulai pointer p dari `root`, yaitu node dengan nilai 8. Karena nilainya lebih besar dari kedua nilai yang dicari, pindahkan pointer ke node kirinya (node 3).
+Ambil node yang memiliki ID = 4 dengan fungsi _search, simpan pada pointer p.
 
 ![pt4](/img/si_pt4.JPG)
 
-Karena 3 lebih dari 1 dan kurang dari 4, node 3 adalah `root` yang sama yang terdekat, sehingga node 3 dikirim ke fungsi `addInorder`.
+Lalu, kalikan p->price dengan X, lalu tambahkan ke Z.
 
 ![pt5](/img/si_pt5.JPG)
-
-Fungsi `addInorder` akan menjumlahkan semua anggota subtree dibawah node 3, disimpan pada variabel `*sum` (dalam `find_path` dibuat variabel `sum` dan dikirimkan alamatnya ke `addInorder`)
-
 ![pt6](/img/si_pt6.JPG)
-
-Kemudian, keluarkan nilai `sum`, yaitu `21`. 
-
-__Untuk input `4 9`__
-
 ![pt7](/img/si_pt7.JPG)
+![pt8](/img/si_pt8.JPG)
+![pt9](/img/si_pt9.JPG)
+![pt10](/img/si_pt10.JPG)
 
-9 tidak ditemukan dalam `tree`, sehingga keluarkan `-1`.
+Untuk dua input selanjutnya, sama seperti input di atas karena IDnya ada.
+
+![pt11](/img/si_pt11.JPG)
+
+Y = 7. Karena tidak ada barang dengan ID 7, keluarkan `Maaf barang tidak tersedia`
+
+![pt12](/img/si_pt12.JPG)
+![pt13](/img/si_pt13.JPG)
+![pt14](/img/si_pt14.JPG)
+
+Y = 2. Barang dengan ID 2 ada, sehingga harganya ditambahkan ke Z
+
+Terakhir, cetak Z.
 
 Output:
 ```
@@ -278,27 +276,29 @@ soalnya
 singkat
 ```
 
-![kk1a](/img/si_kk1a.JPG)
+![kk1](/img/si_kk1.JPG)
 
 Memeriksa `sumParent`. Karena belum `==query`, lanjut ke operasi selanjutnya.
 
-![kk1b](/img/si_kk1b.JPG)
+![kk2](/img/si_kk2.JPG)
 
 Memeriksa `sumBranchRight` dari subnode `right`. Karena belum `==query`, lanjut ke operasi selanjutnya.
 
-![kk1c](/img/si_kk1c.JPG)
-![kk1d](/img/si_kk1d.JPG)
-![kk1e](/img/si_kk1e.JPG)
+![kk3](/img/si_kk3.JPG)
+![kk4](/img/si_kk4.JPG)
+![kk5](/img/si_kk5.JPG)
 
 Begitupula dengan `sumBranchLeft` dari subnode right, `sumBranchRight` dari subnode `left`, dan `sumBranchLeft` dari subnode `left`, karena belum ==query, lanjut ke operasi selanjutnya.
 
-![kk2](/img/si_kk2.JPG)
+![kk6](/img/si_kk6.JPG)
 
 Memeriksa `sumParent` dari node 66. Karena belum `==query`, dan tidak ada node "cucu", maka lanjut ke node sebelah kanan dari `root`.
 
-![kk3](/img/si_kk3.JPG)
+![kk7](/img/si_kk7.JPG)
 
 Memeriksa `sumParent` dari node 91. Karena `==query`, `check=true`, dan pada akhirnya nilai yang dikembalikan adalah `true`. Oleh karena demikian, keluarkan "Penjumlahan angka di tree yang menghasilkan 266 ditemukan".
+
+![kk8](/img/si_kk8.JPG)
 
 Output:
 ```
@@ -344,34 +344,28 @@ CANDA        Mas Daniel    Saranghae Asdos SDH
 
 ![cn_1](/img/si_cn_1.JPG)
 
-Inisialisasi tree dan definisi array berukuran `7`.
+AVL Tree yang terbentuk kira-kira akan seperti ini.
+Dengan masing-masing angka mewakilkan
+1 = Aku
+2 = Asdos
+3 = Baik
+4 = Banyu
+5 = Benci
+6 = CANDA
+7 = Cintaku
+8 = Daniel
+9 = Erki
+10 = Guanteng
+11 = Inez
+12 = Makan
+13 = Mas
+14 = Mba
+15 = Poll
+16 = Rifki
+17 = SDH
+18 = Saranghae
+19 = Soal
 
-![cn_2a](/img/si_cn_2a.JPG)
-![cn_2b](/img/si_cn_2b.JPG)
-
-Input 6 genap, masuk ke tree dan array, dan `size++`. Sama juga dengan input 4.
-
-![cn_3](/img/si_cn_3.JPG)
-
-Input 5 ganjil, nilai 4 di`remove` dari tree dan array. `size--`
-
-![cn_4](/img/si_cn_4.JPG)
-
-Input 8 genap, masuk ke tree dan array, dan `size++`.
-
-![cn_5](/img/si_cn_5.JPG)
-
-Input 7 ganjil, nilai 8 di`remove` dari tree dan array. `size--`
-
-![cn_6a](/img/si_cn_6a.JPG)
-![cn_6b](/img/si_cn_6b.JPG)
-
-Input 12 genap, masuk ke tree dan array, dan `size++`
-Input 10 genap, masuk ke tree dan array, dan `size++`
-
-![cn_7](/img/si_cn_7.gif)
-
-Agar anggota tree dikeluarkan secara terurut dari nilai terendah ke tertinggi, gunakan traversal `inorder` dengan fungsi `printf`.
 
 Output:
 ```
@@ -437,36 +431,36 @@ insert 26
 print
 ```
 
-![mn_1](/img/si_mn_1.JPG)
+![mn_1](/img/si_mn1.JPG)
 
-Inisialisasi tree dan definisi array berukuran `7`.
 
-![mn_2a](/img/si_mn_2a.JPG)
-![mn_2b](/img/si_mn_2b.JPG)
 
-Input 6 genap, masuk ke tree dan array, dan `size++`. Sama juga dengan input 4.
+![mn_2](/img/si_mn2.JPG)
 
-![mn_3](/img/si_mn_3.JPG)
 
-Input 5 ganjil, nilai 4 di`remove` dari tree dan array. `size--`
 
-![mn_4](/img/si_mn_4.JPG)
+![mn_3](/img/si_mn3.JPG)
 
-Input 8 genap, masuk ke tree dan array, dan `size++`.
 
-![mn_5](/img/si_mn_5.JPG)
 
-Input 7 ganjil, nilai 8 di`remove` dari tree dan array. `size--`
+![mn_4](/img/si_mn4.JPG)
 
-![mn_6a](/img/si_mn_6a.JPG)
-![mn_6b](/img/si_mn_6b.JPG)
 
-Input 12 genap, masuk ke tree dan array, dan `size++`
-Input 10 genap, masuk ke tree dan array, dan `size++`
 
-![mn_7](/img/si_mn_7.gif)
+![mn_5](/img/si_mn5.JPG)
 
-Agar anggota tree dikeluarkan secara terurut dari nilai terendah ke tertinggi, gunakan traversal `inorder` dengan fungsi `printf`.
+
+
+![mn_6](/img/si_mn6.JPG)
+
+
+
+![mn_7](/img/si_mn_7.JPG)
+
+
+![mn_8](/img/si_mn8.JPG)
+![mn_9](/img/si_mn9.JPG)
+![mn_10](/img/si_mn10.JPG)
 
 Output:
 ```
