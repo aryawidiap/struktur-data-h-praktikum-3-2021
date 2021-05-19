@@ -324,27 +324,29 @@ singkat
 
 ![kk1](img/si_kk1.JPG)
 
-Memeriksa `sumParent`. Karena belum `==query`, lanjut ke operasi selanjutnya.
+Hasil input data pada trie.
 
-![kk2](img/si_kk2.JPG)
+![kk2a](img/si_kk2a.JPG)
 
-Memeriksa `sumBranchRight` dari subnode `right`. Karena belum `==query`, lanjut ke operasi selanjutnya.
+Mencari "dan", dimulai dari node root.
 
-![kk3](img/si_kk3.JPG)
-![kk4](img/si_kk4.JPG)
-![kk5](img/si_kk5.JPG)
+![kk2b](img/si_kk2b.JPG)
 
-Begitupula dengan `sumBranchLeft` dari subnode right, `sumBranchRight` dari subnode `left`, dan `sumBranchLeft` dari subnode `left`, karena belum ==query, lanjut ke operasi selanjutnya.
+Cek apakah node root punya child node untuk karakter 'd'. Karena ada, lanjut cek ke karakter berikutnya.
 
-![kk6](img/si_kk6.JPG)
+![kk2c](img/si_kk2c.JPG)
 
-Memeriksa `sumParent` dari node 66. Karena belum `==query`, dan tidak ada node "cucu", maka lanjut ke node sebelah kanan dari `root`.
+Cek apakah node 'd' punya child node untuk karakter 'a'. Karena tidak ada, hentikan pencarian dan return false. Karena fungsi main menerima false, print `0`.
 
-![kk7](img/si_kk7.JPG)
+![kk3](img/si_kk3.gif)
 
-Memeriksa `sumParent` dari node 91. Karena `==query`, `check=true`, dan pada akhirnya nilai yang dikembalikan adalah `true`. Oleh karena demikian, keluarkan "Penjumlahan angka di tree yang menghasilkan 266 ditemukan".
+Mencari "soalnya". Tiap karakter dalam kata "soalnya" ditemukan dalam rangkaian node. Terakhir, karakter 'a' merupakan karakter terakhir dari "soalnya" sehingga cek isEndOfWord pada node yang menyimpan karakter 'a'. Karena nilainya true, fungsi search akan mengembalikan nilai true ke fungsi main dan di print `1` melalui fungsi main.
 
-![kk8](img/si_kk8.JPG)
+![kk4a](img/si_kk4a.JPG)
+![kk4b](img/si_kk4b.JPG)
+![kk4c](img/si_kk4c.JPG)
+
+Mencari "singkat". Mirip dengan pencarian "dan", pencarian berhenti di karakter kedua ('i') karena tidak terdapat node children yang melambangkan karakter tersebut. Dengan demikian, dikembalikan nilai false dan fungsi main melakukan print `0`.
 
 Output:
 
